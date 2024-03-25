@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>外幣參考匯率</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>外幣參考匯率</h2>
+
+<!-- Add Form -->
+<h3>新增外幣匯率</h3>
+<form th:action="@{/addExchangeRate}" method="post">
+    時間: <input type="text" name="date"><br>
+    美金 to 台幣: <input type="text" name="usdToNtd"><br>
+    人民幣 to 台幣: <input type="text" name="rmbToNtd"><br>
+    美金 to 人民幣: <input type="text" name="usdToRmb"><br>
+    <input type="submit" value="Add">
+</form>
+
+<h3>查詢外幣匯率</h3>
+<form th:action="@{/queryExchangeRates}" method="get">
+    <select name="startDate">
+        <option th:each="date : ${dates}" th:value="${date}" th:text="${date}"></option>
+    </select><br>
+    <input type="submit" value="Query">
+</form>
+
+<div>
+    <h3>查詢結果</h3>
+    <table>
+        <tr>
+            <th>日期</th>
+            <th>美金to台幣</th>
+            <th>人民幣to台幣</th>
+            <th>美金to人民幣</th>
+        </tr>
+        <tr th:each="exchangeRate : ${queryResult}">
+            <td th:text="${exchangeRate.date}"></td>
+            <td th:text="${exchangeRate.usdToNtd}"></td>
+            <td th:text="${exchangeRate.rmbToNtd}"></td>
+            <td th:text="${exchangeRate.usdToRmb}"></td>
+        </tr>
+    </table>
+</div>
+
+
+<!-- Update Form -->
+<h3>更新外幣匯率</h3>
+<form th:action="@{/updateExchangeRate}" method="post">
+    <select name="startDate">
+        <option th:each="date : ${dates}" th:value="${date}" th:text="${date}"></option>
+    </select><br>
+    美金 to 台幣: <input type="text" name="usdToNtd"><br>
+    人民幣 to 台幣: <input type="text" name="rmbToNtd"><br>
+    美金 to 人民幣: <input type="text" name="usdToRmb"><br>
+    <input type="submit" value="Update">
+</form>
+
+<!-- Delete Form -->
+<h3>刪除外幣匯率</h3>
+<form th:action="@{/deleteExchangeRate}" method="post">
+    <select name="startDate">
+        <option th:each="date : ${dates}" th:value="${date}" th:text="${date}"></option>
+    </select><br>
+    <input type="submit" value="Delete">
+</form>
+
+</body>
+</html>
